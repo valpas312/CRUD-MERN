@@ -1,9 +1,84 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const AgregarUsuario = () => {
+  const [submit, setSubmit] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .max(15, "Debe tener 15 caracteres o menos")
+        .required("Requerido"),
+      email: Yup.string().email("Email no válido").required("Requerido"),
+      password: Yup.string()
+        .min(6, "Debe tener 6 caracteres o más")
+        .required("Requerido"),
+    }),
+    onSubmit: (values) => {
+      setSubmit(true);
+      console.log(values);
+    },
+  });
   return (
-    <div>Agregar Usuario</div>
-  )
-}
+    <>
+      <h1>Agregar Usuario</h1>
+      <form onSubmit={formik.handleSubmit}>
+        <div>
+          <label htmlFor="name">Nombre:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
+          />
+          {formik.touched.name && formik.errors.name ? (
+            <div>{formik.errors.name}</div>
+          ) : null}
+        </div>
 
-export default AgregarUsuario
+        <div>
+          <label htmlFor="email">Correo electrónico:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <div>{formik.errors.email}</div>
+          ) : null}
+        </div>
+
+        <div>
+          <label htmlFor="password">Contraseña:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <div>{formik.errors.password}</div>
+          ) : null}
+        </div>
+
+        <button type="submit" disabled={submit}>
+          {submit ? "Enviando..." : "Enviar"}
+        </button>
+      </form>
+    </>
+  );
+};
+
+export default AgregarUsuario;
