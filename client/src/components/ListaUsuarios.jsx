@@ -5,6 +5,7 @@ import axios from 'axios'
 const ListaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([])
 
+  //solicitud al servidor
   useEffect(() => {
     axios.get('http://localhost:3000/api/usuario/lista')
       .then(res => {
@@ -18,6 +19,8 @@ const ListaUsuarios = () => {
   return (<>
     <div>ListaUsuarios</div>
     {
+      //mapeado condicional de usuarios
+
       usuarios.length ? usuarios.map(usuario => (
       <Usuario key={usuario._id} {...usuario} />
       )) : (<div>No hay usuarios</div>)

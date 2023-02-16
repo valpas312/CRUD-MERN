@@ -3,8 +3,12 @@ import axios from "axios";
 import uniqid from "uniqid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 const AgregarUsuario = () => {
+
+  const navigate = useNavigate();
+
   //Validacion de formularios con yup y manejo de estados de formulario con formik
   const [submit, setSubmit] = useState(false);
   const formik = useFormik({
@@ -37,10 +41,13 @@ const AgregarUsuario = () => {
         .then((res) => {
           console.log(res);
           setSubmit(false);
+          alert("Usuario agregado");
+          navigate("/");
         })
         .catch((err) => {
           console.log(err);
           setSubmit(false);
+          alert("Error al agregar usuario");
         });
     },
   });
