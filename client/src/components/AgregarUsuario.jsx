@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import axios from "axios";
+import uniqid from "uniqid";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const AgregarUsuario = () => {
+  //Validacion de formularios con yup y manejo de estados de formulario con formik
   const [submit, setSubmit] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -21,7 +24,24 @@ const AgregarUsuario = () => {
     }),
     onSubmit: (values) => {
       setSubmit(true);
-      console.log(values);
+      const usuario = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        idusuario: uniqid()
+      };
+      console.log(usuario);
+      //Envio de datos al servidor
+      axios
+        .post("http://localhost:3000/api/usuario/agregar", usuario)
+        .then((res) => {
+          console.log(res);
+          setSubmit(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setSubmit(false);
+        });
     },
   });
   return (

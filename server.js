@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
 
+const cors = require('cors');
+app.use(cors());
+
 //Conexion db
 const db = require('./db');
 
-//Rutas y modelu de usuario
+//Rutas y modelo de usuario
 const rutausuario = require('./routes/usuario');
 app.use('/api/usuario', rutausuario);
 
