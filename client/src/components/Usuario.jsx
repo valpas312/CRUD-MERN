@@ -1,8 +1,14 @@
 import React from 'react'
+import './Usuario.css'
 
-const Usuario = () => {
+const Usuario = ({name, email, password, idusuario}) => {
   return (
-    <div>Usuario</div>
+    <div className='userContainer'>
+      <h1>{idusuario}</h1>
+      <h2>{name}</h2>
+      <p>{email}</p>
+      <p>{password}</p>
+    </div>
   )
 }
 
